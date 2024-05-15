@@ -1,48 +1,278 @@
-console.log("hi");
-// Path: playground.js
-
-const myArr = [1, 2, 3, 4];
-// myArr.concat([3,2,1], [3,2,1])
-// console.log(myArr.splice(3));// myArr =[1,2,3] splice changes the myArr and doesnt create a copy
-//console.log(myArr.slice(1, 3)); // myArr = [2,3] slice creates a copy of the array
-
-const arrayLike = {
-  length: 2,
-  0: "a",
-  1: "b",
-  2: "c", // ignored by at() since length is 2
+const fantanResult = {
+  1: [
+    "Big",
+    "Small",
+    "Odd",
+    "Even",
+    "Ones",
+    "Tens",
+    "Hundreds",
+    "Thousands",
+    "Ten Thousands",
+    "Dragon",
+    "Tiger",
+    "Tie",
+    "1,2",
+    "2,3",
+    "1,3",
+    "1,4",
+    "2,4",
+    "3,4",
+    "2,3,4",
+    "3,4,1",
+    "2,4,1",
+    "3,2,1",
+    "1",
+    "2",
+    "3",
+    "4",
+  ],
+  2: [],
+  3: [],
+  4: [],
+  5: [],
 };
-//   console.log(Array.prototype.at.call(arrayLike, 0)); // "a"
-//   console.log(Array.prototype.at.call(arrayLike, 2)); // undefined
 
-// console.log(arrayLike.at(0));
+// function fantan5d(drawNumbers){}
 
-// console.log([1, 7, 3, 8, 4, 6].copyWithin(3, 0));//[1,7,3,1,4,6]
+class FantanGame {
+  constructor(lotteryType, drawNumbers) {
+    this.lotteryType = lotteryType;
+    this.drawNumbers = drawNumbers;
+  }
+}
 
-// const array1 = ['a', 'b', 'c', "d"];
+function bigSmall(num, bigMin, bigMax, smallMin, smallMax) {
+  if (num >= bigMin && num <= bigMax) {
+    return "Big";
+  } else if (num >= smallMin && num <= smallMax) {
+    return "Small";
+  } else {
+    return "Invalid input";
+  }
+}
 
-// const iterator1 = array1.entries();
+function oddEven(num) {
+  if (num % 2 === 0) {
+    return "Even";
+  } else {
+    return "Odd";
+  }
+}
 
-// console.log(iterator1.next().value);
-// // Expected output: Array [0, "a"]
+const tripleComb = ["2,3,4", "1,3,4", "1,2,4", "1,2,3"];
+function fantan1(num) {
+  let remainder = num % 4;
+  if (remainder === 0) {
+    return ["4", "3,4", "2,4", "1,4", "2,3,4", "1,3,4", "1,2,4"];
+  } else if (remainder === 1) {
+    return ["1", "1,2", "1,3", "1,4", "1,3,4", "1,2,4", "1,2,3"];
+  } else if (remainder === 2) {
+    return ["2", "1,2", "2,3", "2,4", "2,3,4", "1,2,4", "1,2,3"];
+  } else if (remainder === 3) {
+    return ["3", "1,3", "2,3", "3,4", "2,3,4", "1,3,4", "1,2,3"];
+  } else {
+    return ["Invalid remainder"];
+  }
+}
 
-// console.log(iterator1.next().value);
-// // Expected output: Array [1, "b"]
+// console.log(fantan1(6))
+function fantan2(num) {
+  let remainder = num % 4;
+  if (remainder === 0) {
+    return [
+      "4 Fan",
+      "Even",
+      "3 Horn 4",
+      "1 Horn 4",
+      "4 Thought 2",
+      "4 Thought 3",
+      "4 Thought 1",
+    ];
+  } else if (remainder === 1) {
+    return [
+      "1 Fan",
+      "Odd",
+      "1 Horn 4",
+      "1 Horn 2",
+      "1 Thoughts 2",
+      "1 Thoughts 3",
+      "1 Thoughts 4",
+    ];
+  } else if (remainder === 2) {
+    return [
+      "2 Fan",
+      "Even",
+      "1 Horn 2",
+      "2 Horn 3",
+      "2 Thoughts 1",
+      "2 Thoughts 3",
+      "3 Thoughts 4",
+    ];
+  } else if (remainder === 3) {
+    return [
+      "3 Fan",
+      "Odd",
+      "2 Horn 3",
+      "3 Horn 4",
+      "3 Thoughts 1",
+      "3 Thoughts 2",
+      "3 Thoughts 4",
+    ];
+  } else {
+    return ["Invalid remainder"];
+  }
+}
 
-// console.log(iterator1.next().value);
+function fantan3() {}
 
-// console.log(iterator1.next().value);
+function getColorRange(num) {
+  console.log("num", num);
+  if (num >= 0 && num <= 3) {
+    return "Red";
+  } else if (num >= 4 && num <= 7) {
+    return "Orange";
+  } else if (num >= 8 && num <= 11) {
+    return "Yellow";
+  } else if (num >= 12 && num <= 15) {
+    return "Green deep";
+  } else if (num >= 16 && num <= 19) {
+    return "Green Light";
+  } else if (num >= 20 && num <= 23) {
+    return "Blue";
+  } else if (num >= 24 && num <= 27) {
+    return "Purple";
+  } else {
+    return "Invalid input";
+  }
+}
 
+function getWinCombinations(num1, num2, num3) {
+  const isBig = (num) => num >= 5 && num <= 9;
+  const isSmall = (num) => num >= 0 && num <= 4;
+  const isEven = (num) => num % 2 === 0;
+  const isOdd = (num) => num !== 0 && num % 2 !== 0; // Corrected isOdd function
 
+  const isPair = (num1, num2, num3) => num1 === num2 && num2 === num3;
+  const isAllBig = (num1, num2, num3) =>
+    isBig(num1) && isBig(num2) && isBig(num3);
+  const isAllSmall = (num1, num2, num3) =>
+    isSmall(num1) && isSmall(num2) && isSmall(num3);
+  const isAllEven = (num1, num2, num3) =>
+    isEven(num1) && isEven(num2) && isEven(num3);
+  const isAllOdd = (num1, num2, num3) =>
+    isOdd(num1) && isOdd(num2) && isOdd(num3);
 
-console.log([1, 1,1,1,2,1].every(item => item == 1))
+  const moreBig = isBig(num1) + isBig(num2) + isBig(num3) > 1;
+  const moreSmall = isSmall(num1) + isSmall(num2) + isSmall(num3) > 1;
+  const moreOdd = isOdd(num1) + isOdd(num2) + isOdd(num3) > 1;
+  const moreEven = isEven(num1) + isEven(num2) + isEven(num3) > 1;
 
+  const winCombinations = [];
 
-const array1 = [1, 30, 39, 29, 10, 13];
-const array2 = [1, 30]
+  if (isPair(num1, num2, num3)) {
+    winCombinations.push("Pair");
+  }
+  if (moreBig) {
+    winCombinations.push("More Big");
+  }
+  if (moreSmall) {
+    winCombinations.push("More Small");
+  }
+  if (moreOdd) {
+    winCombinations.push("More Odd");
+  }
+  if (moreEven) {
+    winCombinations.push("More Even");
+  }
+  if (isAllBig(num1, num2, num3)) {
+    winCombinations.push("All Big");
+  }
+  if (isAllSmall(num1, num2, num3)) {
+    winCombinations.push("All Small");
+  }
+  if (isAllEven(num1, num2, num3)) {
+    winCombinations.push("All Even");
+  }
+  if (isAllOdd(num1, num2, num3)) {
+    winCombinations.push("All Odd");
+  }
+  if (!isPair(num1, num2, num3)) {
+    winCombinations.push("No Pair");
+  }
 
-console.log(array2.every((value )=> array1.includes(value)))
-// console.log(array1.every(item=> item > 1));
+  return winCombinations;
+}
 
-console.log(Array(2).fill(2))
-console.log(Array.from({length: 4}).fill(2))
+console.log(getWinCombinations(...[5, 2, 3, 3, 1].slice(2)));
+
+console.log([1, 0, 9, 3, 0].slice(2));
+
+function sumAndRange(arr) {
+  // Helper function to check if a string contains only digits
+  const isNumeric = (str) => /^\d+$/.test(str);
+
+  // Calculate the sum of numeric values in the array
+  const sum = arr.reduce((acc, curr) => {
+    if (isNumeric(curr)) {
+      return acc + parseInt(curr);
+    }
+    return acc;
+  }, 0);
+
+  // Determine the range based on the sum
+  if (sum >= 0 && sum <= 4) {
+    return "0-4";
+  } else if (sum >= 23 && sum <= 27) {
+    return "23-27";
+  } else {
+    return ` ${sum}`; //`Sum is ${sum}`;
+  }
+}
+
+console.log(sumAndRange([8, 8, 8]));
+
+function positionOfBallNode(nums) {
+  const isBig = (num) => num >= 5 && num <= 9;
+  const isSmall = (num) => num >= 0 && num <= 4;
+  const isEven = (num) => num % 2 === 0;
+  const isOdd = (num) => num % 2 !== 0;
+
+  const result = nums.map((num, index) => {
+    const position = index + 1;
+    let oddEven;
+    let bigSmall;
+    if (isBig(num)) {
+      bigSmall = "Big";
+    } else if (isSmall(num)) {
+      bigSmall = "Small";
+    } else {
+      bigSmall = null;
+    }
+
+    if (isEven(num)) {
+      oddEven = "Even";
+    } else if (isOdd(num)) {
+      oddEven = "Odd";
+    } else {
+      oddEven = null;
+    }
+
+    return {
+      position,
+      number: `${num}`,
+      bigSmall,
+      oddEven,
+    };
+  });
+
+  return result;
+}
+
+console.log(positionOfBallNode([4, 2, 2, 1, 7]));
+
+console.log(
+  getColorRange(
+    [5, 2, 3, 3, 1].slice(2).reduce((acc, curr, array) => acc + curr, 0)
+  )
+);
