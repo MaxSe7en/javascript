@@ -35,12 +35,13 @@ const fantanResult = {
 
 // function fantan5d(drawNumbers){}
 
-class FantanGame {
-  constructor(lotteryType, drawNumbers) {
-    this.lotteryType = lotteryType;
-    this.drawNumbers = drawNumbers;
-  }
-}
+// class FantanGame {
+//   constructor(lotteryType, drawNumbers) {
+//     this.lotteryType = lotteryType;
+//     this.drawNumbers = drawNumbers;
+//   }
+
+// }
 
 function bigSmall(num, bigMin, bigMax, smallMin, smallMax) {
   if (num >= bigMin && num <= bigMax) {
@@ -52,6 +53,19 @@ function bigSmall(num, bigMin, bigMax, smallMin, smallMax) {
   }
 }
 
+console.log(
+  bigSmall(
+    [9, 8, 1, 2, 0].slice(2).reduce((acc, curr, array) => acc + curr, 0),
+    23,
+    45,
+    0,
+    22
+  )
+);
+console.log(
+  oddEven([9, 8, 1, 2, 0].reduce((acc, curr, array) => acc + curr, 0))
+);
+
 function oddEven(num) {
   if (num % 2 === 0) {
     return "Even";
@@ -61,6 +75,7 @@ function oddEven(num) {
 }
 
 const tripleComb = ["2,3,4", "1,3,4", "1,2,4", "1,2,3"];
+
 function fantan1(num) {
   let remainder = num % 4;
   if (remainder === 0) {
@@ -76,7 +91,6 @@ function fantan1(num) {
   }
 }
 
-// console.log(fantan1(6))
 function fantan2(num) {
   let remainder = num % 4;
   if (remainder === 0) {
@@ -124,10 +138,9 @@ function fantan2(num) {
   }
 }
 
-function fantan3() {}
+// function fantan3() {}
 
 function getColorRange(num) {
-  console.log("num", num);
   if (num >= 0 && num <= 3) {
     return "Red";
   } else if (num >= 4 && num <= 7) {
@@ -204,9 +217,9 @@ function getWinCombinations(num1, num2, num3) {
   return winCombinations;
 }
 
-console.log(getWinCombinations(...[5, 2, 3, 3, 1].slice(2)));
+// console.log(getWinCombinations(...[9,2,1,2,5].slice(2)));
 
-console.log([1, 0, 9, 3, 0].slice(2));
+// console.log([1, 0, 9, 3, 0].slice(2));
 
 function sumAndRange(arr) {
   // Helper function to check if a string contains only digits
@@ -226,11 +239,11 @@ function sumAndRange(arr) {
   } else if (sum >= 23 && sum <= 27) {
     return "23-27";
   } else {
-    return ` ${sum}`; //`Sum is ${sum}`;
+    return `${sum}`; //`Sum is ${sum}`;
   }
 }
 
-console.log(sumAndRange([8, 8, 8]));
+// console.log(sumAndRange([8, 8, 8]));
 
 function positionOfBallNode(nums) {
   const isBig = (num) => num >= 5 && num <= 9;
@@ -269,10 +282,40 @@ function positionOfBallNode(nums) {
   return result;
 }
 
-console.log(positionOfBallNode([4, 2, 2, 1, 7]));
+// console.log(positionOfBallNode([4, 2, 2, 1, 7]));
 
-console.log(
-  getColorRange(
-    [5, 2, 3, 3, 1].slice(2).reduce((acc, curr, array) => acc + curr, 0)
-  )
-);
+// console.log(
+//   getColorRange(
+//     [9,2,1,2,5].slice(2).reduce((acc, curr, array) => acc + curr, 0)
+//   )
+// );
+// console.log("fantan 2", fantan1([9,1,5,0,1].slice(2).reduce((acc, curr, array) => acc + curr, 0)))
+
+// const a = [1, 2, 3, 4];
+
+// console.log("min", Math.max(...a), a[0]);
+
+// let g = a.map((item, ind, arr) => [Math.max(...arr), ind]);
+
+// console.log([1, 2, 3, 4].findIndex(() => Math.max(...[1, 2, 3, 4])));
+
+function findHighestPosition(arr) {
+  const maxValue = Math.max(...arr);
+  const position = ["Ten Thousand", "Thousand", "Hundred", "Ten", "Zero"]
+  const maxIndexes = arr.reduce((indexes, value, index) => {
+    if (value === maxValue) {
+      indexes.push(position[index]);
+    }
+    return indexes;
+  }, []);
+  return maxIndexes;
+}
+
+console.log(findHighestPosition([9, 2, 3, 4, 9]));
+
+
+
+
+function fiveDFantanResults(drawNumber){
+
+}
