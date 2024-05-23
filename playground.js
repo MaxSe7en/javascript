@@ -16,13 +16,7 @@ function oddEven(num) {
   }
 }
 
-let expectedResults = [
-  "TOAK",
-  "Streak",
-  "Pair",
-  "Half Streak",
-  "Lose Cards",
-];
+let expectedResults = ["TOAK", "Streak", "Pair", "Half Streak", "Lose Cards"];
 
 function fantan1(num) {
   let remainder = num % 4;
@@ -106,6 +100,56 @@ function getColorRange(num) {
   }
 }
 
+function getHappy8ColorRange(drawNumbers) {
+  const colorRanges = {
+    Blue: { min: 1, max: 20 },
+    Green: { min: 21, max: 40 },
+    Purple: { min: 41, max: 60 },
+    Red: { min: 61, max: 80 },
+  };
+
+  const colorCounts = {
+    Blue: 0,
+    Green: 0,
+    Purple: 0,
+    Red: 0,
+  };
+
+  drawNumbers.forEach((num) => {
+    if (num >= colorRanges.Blue.min && num <= colorRanges.Blue.max) {
+      colorCounts.Blue += 1;
+    } else if (num >= colorRanges.Green.min && num <= colorRanges.Green.max) {
+      colorCounts.Green += 1;
+    } else if (num >= colorRanges.Purple.min && num <= colorRanges.Purple.max) {
+      colorCounts.Purple += 1;
+    } else if (num >= colorRanges.Red.min && num <= colorRanges.Red.max) {
+      colorCounts.Red += 1;
+    }
+  });
+
+  const allColorsHaveFiveOccurrences =
+    colorCounts.Blue === 5 &&
+    colorCounts.Green === 5 &&
+    colorCounts.Purple === 5 &&
+    colorCounts.Red === 5;
+
+  if (allColorsHaveFiveOccurrences) {
+    return "Refund";
+  }
+
+  let maxCount = 0;
+  let maxColor = "";
+
+  for (const color in colorCounts) {
+    if (colorCounts[color] > maxCount) {
+      maxCount = colorCounts[color];
+      maxColor = color;
+    }
+  }
+
+  return maxColor;
+}
+
 function naturalElements(number) {
   if (number >= 3 && number <= 7) {
     return "Wind";
@@ -120,6 +164,80 @@ function naturalElements(number) {
   }
 }
 
+function happy8NaturalElement(number) {
+  if (isNaN(number)) {
+    return "Invalid input. Please enter a number.";
+  }
+
+  // Determine the natural element based on the number range
+  if (number >= 925 && number <= 1410) {
+    return "Earth";
+  } else if (number >= 210 && number <= 695) {
+    return "Gold";
+  } else if (number >= 696 && number <= 763) {
+    return "Wood";
+  } else if (number >= 764 && number <= 856) {
+    return "Water";
+  } else if (number >= 857 && number <= 924) {
+    return "Fire";
+  } else {
+    return "The number is outside the specified ranges.";
+  }
+}
+
+
+function zodiac(drawNumbers) {
+  // const zodiacRanges = {
+  //   鼠: [5, 17, 29, 41],
+  //   牛: [4, 16, 28, 40],
+  //   虎: [3, 15, 27, 39],
+  //   兔: [2, 14, 26, 38],
+  //   龙: [1, 13, 25, 37, 49],
+  //   蛇: [12, 24, 36, 48],
+  //   马: [11, 23, 35, 47],
+  //   羊: [10, 22, 34, 46],
+  //   猴: [9, 21, 33, 45],
+  //   鸡: [8, 20, 32, 44],
+  //   狗: [7, 19, 31, 43],
+  //   猪: [6, 18, 30, 42],
+  // };
+  const zodiacRanges = {
+    "Rat": [5, 17, 29, 41],
+    "Ox": [4, 16, 28, 40],
+    "Tiger": [3, 15, 27, 39],
+    "Rabbit": [2, 14, 26, 38],
+    "Dragon": [1, 13, 25, 37, 49],
+    "Snake": [12, 24, 36, 48],
+    "Horse": [11, 23, 35, 47],
+    "Sheep": [10, 22, 34, 46],
+    "Monkey": [9, 21, 33, 45],
+    "Rooster": [8, 20, 32, 44],
+    "Dog": [7, 19, 31, 43],
+    "Pig": [6, 18, 30, 42],
+  };
+  
+  const zodiacCounts = {};
+  for (const animal in zodiacRanges) {
+    zodiacCounts[animal] = 0;
+  }
+
+  drawNumbers.forEach((num) => {
+    for (const animal in zodiacRanges) {
+      if (zodiacRanges[animal].includes(num)) {
+        zodiacCounts[animal] += 1;
+      }
+    }
+  });
+
+  const result = Object.entries(zodiacCounts)
+    .filter(([_, count]) => count > 0)
+    .map(([animal]) => animal);
+
+  return result;
+}
+function specialZodiac(drawNumbers){
+ return Array.isArray(drawNumbers) ? drawNumbers.slice(-1).toString() : "Invalid draw numbers" 
+}
 function isPair(num1, num2, num3) {
   return num1 === num2 && num2 === num3;
 }
@@ -414,6 +532,62 @@ function fast3FantanResults(drawNumber, game, optionalBallPosition = 1) {
   return GAME_RESULTS.filter((item) => item !== "");
 }
 
+function happy8FantanResults(drawNumber, game) {
+  const DRAW_NUMBERS = [...drawNumber];
+  const GAME_RESULTS = [];
+  const SUM_OF_DRAW_NUMBERS = DRAW_NUMBERS.reduce((acc, curr) => acc + curr, 0);
+  const SUM_OF_SUMMED_DRAWNUMBERS = SUM_OF_DRAW_NUMBERS.toString()
+    .split("")
+    .map(Number)
+    .reduce((acc, curr) => acc + curr, 0);
+  switch (game.toLowerCase()) {
+    case "main area": {
+      GAME_RESULTS.push(
+        bigSmall(SUM_OF_DRAW_NUMBERS, 811, 1410, 210, 809),
+        oddEven(SUM_OF_DRAW_NUMBERS),
+        getHappy8ColorRange(DRAW_NUMBERS),
+        happy8NaturalElement(SUM_OF_DRAW_NUMBERS)
+      );
+      break;
+    }
+    case "fantan 1": {
+      GAME_RESULTS.push(...fantan1(SUM_OF_SUMMED_DRAWNUMBERS));
+      break;
+    }
+    case "fantan 2": {
+      GAME_RESULTS.push(...fantan2(SUM_OF_SUMMED_DRAWNUMBERS));
+      break;
+    }
+  }
+  return GAME_RESULTS;
+}
+
+function mark6FantanResults(drawNumber, game) {
+  const DRAW_NUMBERS = [...drawNumber];
+  const GAME_RESULTS = [];
+  const LAST_DRAW_NUMBER = DRAW_NUMBERS.slice(-1)
+  const SUM_OF_DRAW_NUMBERS = DRAW_NUMBERS.reduce((acc, curr) => acc + curr, 0);
+  const SUM_OF_SUMMED_DRAWNUMBERS = SUM_OF_DRAW_NUMBERS.toString()
+    .split("")
+    .map(Number)
+    .reduce((acc, curr) => acc + curr, 0);
+  switch (game.toLowerCase()) {
+    case "main area": {
+      GAME_RESULTS.push(
+        ...zodiac(DRAW_NUMBERS),
+        bigSmall(LAST_DRAW_NUMBER, 25, 48, 1, 24),
+        oddEven(LAST_DRAW_NUMBER),
+      );
+      break;
+    }
+    case "special zodiac": {
+      GAME_RESULTS.push(specialZodiac(DRAW_NUMBERS));
+      break;
+    }
+  }
+  return GAME_RESULTS;
+}
+
 function returnCountOfNumbers(drawNumbers) {
   let count = {};
   drawNumbers.forEach((item) => {
@@ -460,7 +634,8 @@ console.log(
   // fast3FantanResults([1, 3, 3], "Short deck dice", 1),
   // getNumbersInDraw([0, 5, 2])
   // sPair([0, 0, 2])
-  fast3FantanResults([1, 4, 6], "Miscellaneous Long Deck", 2)
+  mark6FantanResults([3, 10, 12, 15, 24, 31, 32], "special zodiac")
+  // fast3FantanResults([1, 3, 6], "Miscellaneous Long Deck", 2)
 );
 
 function generateAllPairs(numbers) {
